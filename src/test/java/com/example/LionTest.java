@@ -10,6 +10,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
@@ -51,5 +52,12 @@ public class LionTest extends TestCase {
         when(feline.getFood("Хищник")).thenReturn(List.of("one", "two", "three"));
         var lion = new Lion(gender, feline);
         assertEquals(List.of("one", "two", "three"), lion.getFood());
+    }
+
+    @Test
+    public void checkException() {
+        Exception actualException = assertThrows(Exception.class, () ->
+                new Lion("Чиполлино", feline));
+        assertEquals("Используйте допустимые значения пола животного - самец или самка", actualException.getMessage());
     }
 }
